@@ -33,6 +33,7 @@ repos:
           - tokenize-rt
         args:
           - --config-file=mypy.ini
+        exclude: tests
     rev: ''
     repo: https://github.com/pre-commit/mirrors-mypy
   # ISORT
@@ -43,3 +44,14 @@ repos:
           - --line-length=80
     repo: https://github.com/pycqa/isort
     rev: ''
+  # PYTEST
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: /usr/bin/pytest
+        args:
+          - tests
+        language: system
+        types:
+          - python
