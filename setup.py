@@ -1,11 +1,13 @@
-from setuptools import setup
+from setuptools import setup  # type: ignore
+
+__version__ = "0.5.20201121184023"
 
 setup(
-    name='py9lib',
-    version='0.5',
-    packages=['py9lib'],
-    url='http://github.com/qdbp/py9lib.git',
-    license='',
-    author='Evgeny Naumov',
-    description='utility code'
+    name="py9lib",
+    version=__version__,
+    packages=["py9lib"],
+    url="http://github.com/qdbp/py9lib.git",
+    license="",
+    author="Evgeny Naumov",
+    description="utility code",
 )

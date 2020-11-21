@@ -1,3 +1,4 @@
+from functools import wraps
 from time import sleep, time
 from typing import Generic, cast
 
@@ -5,6 +6,7 @@ from .typing_ import F
 from .util import value_assert
 
 
+# noinspection PyPep8Naming
 class ratelimit(Generic[F]):
     def __init__(self, cap: int, period: float) -> None:
         value_assert(cap > 0) and value_assert(period > 1e-6)
@@ -17,8 +19,9 @@ class ratelimit(Generic[F]):
 
     # noinspection PyMethodParameters
     def __call__(limiter, f: F) -> F:
-        def wrapper(*args, **kwargs):
-            print(f"call: pool = {limiter.__pool}")
+        # noinspection PyMissingTypeHints
+        @wraps(f)
+        def wrapper(*args, **kwargs):  # type: ignore
             while (
                 new_pool := min(
                     limiter.cap,
@@ -29,7 +32,6 @@ class ratelimit(Generic[F]):
                 )
             ) == 0:
                 to_sleep = limiter.__last + limiter.period - t_call
-                print(f"sleep {to_sleep}")
                 sleep(to_sleep)
 
             assert new_pool > 0
