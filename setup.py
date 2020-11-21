@@ -7,6 +7,5 @@ setup(
     url='http://github.com/qdbp/py9lib.git',
     license='',
     author='Evgeny Naumov',
-    author_email='egeny@enaumov.me',
     description='utility code'
 )
