@@ -1,6 +1,6 @@
 from setuptools import setup  # type: ignore
 
-__version__ = "0.5.20201121184023"
+__version__ = "0.5.20201130003153"
 
 setup(
     name="py9lib",
