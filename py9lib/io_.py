@@ -1,6 +1,8 @@
+import json
+import pickle
 from functools import wraps
 from time import sleep, time
-from typing import Generic, cast
+from typing import Any, Dict, Generic, cast
 
 from .typing_ import F
 from .util import value_assert
@@ -40,3 +42,23 @@ class ratelimit(Generic[F]):
             return f(*args, **kwargs)
 
         return cast(F, wrapper)
+
+
+def write_pickle(fn: str, obj: Any) -> None:
+    with open(fn, "wb") as f:
+        pickle.dump(f, obj)
+
+
+def read_pickle(fn: str) -> Any:
+    with open(fn, "rb") as f:
+        return pickle.load(f)
+
+
+def read_json(fn: str) -> Dict[str, Any]:
+    with open(fn, "rb") as f:
+        return cast(Dict[str, Any], json.load(f))
+
+
+def write_json(fn: str, obj: Dict[str, Any]) -> None:
+    with open(fn, "w") as f:
+        json.dump(obj, f)
