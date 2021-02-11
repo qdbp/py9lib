@@ -1,14 +1,8 @@
 from functools import wraps
 from time import time
-from typing import Callable, Iterable, Literal, cast
+from typing import Callable, Iterable, cast
 
 from py9lib.typing_ import F, T
-
-
-def value_assert(cond: bool, msg: str = None) -> Literal[True]:
-    if not cond:
-        raise ValueError(msg)
-    return True
 
 
 def take_where(what: Iterable[T], where: Iterable[bool]) -> Iterable[T]:

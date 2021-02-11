@@ -1,6 +1,6 @@
 from setuptools import setup  # type: ignore
 
-__version__ = "0.6.20201211145450"
+__version__ = "0.6.20210211002605"
 
 setup(
     name="py9lib",
@@ -11,4 +11,6 @@ setup(
     license="",
     author="Evgeny Naumov",
     description="utility code",
+    extras_require={"yaml": ["pyyaml"]},
+    python_requires=">3.9.0",
 )

@@ -1,7 +1,7 @@
-from typing import Any, Dict
+from typing import Any
 
 
-def mk_column_spec(d: Dict[str, Any]) -> str:
+def mk_column_spec(d: dict[str, Any]) -> str:
     """
     Generates a SQL INSERT columns and VALUES string.
 

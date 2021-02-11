@@ -1,11 +1,12 @@
 import json
 import pickle
 from functools import wraps
+from pathlib import Path
 from time import sleep, time
-from typing import Any, Dict, Generic, cast
+from typing import Any, Generic, Union, cast
 
-from .typing_ import F
-from .util import value_assert
+from py9lib.errors import value_assert
+from py9lib.typing_ import F
 
 
 # noinspection PyPep8Naming
@@ -44,21 +45,44 @@ class ratelimit(Generic[F]):
         return cast(F, wrapper)
 
 
-def write_pickle(fn: str, obj: Any) -> None:
+AnyPath = Union[str, Path]
+
+
+def write_pickle(fn: AnyPath, obj: Any) -> None:
     with open(fn, "wb") as f:
         pickle.dump(f, obj)
 
 
-def read_pickle(fn: str) -> Any:
+def read_pickle(fn: AnyPath) -> Any:
     with open(fn, "rb") as f:
         return pickle.load(f)
 
 
-def read_json(fn: str) -> Dict[str, Any]:
+def read_json(fn: AnyPath) -> dict[str, Any]:
     with open(fn, "rb") as f:
-        return cast(Dict[str, Any], json.load(f))
+        return cast(dict[str, Any], json.load(f))
 
 
-def write_json(fn: str, obj: Dict[str, Any]) -> None:
+def write_json(fn: AnyPath, obj: dict[str, Any]) -> None:
     with open(fn, "w") as f:
         json.dump(obj, f)
+
+
+def read_yaml(fn: AnyPath) -> dict[str, Any]:
+    try:
+        import yaml
+    except ImportError as e:
+        raise NotImplementedError("Yaml not available") from e
+
+    with open(fn, "r") as f:
+        return cast(dict[str, Any], yaml.load(f, Loader=yaml.FullLoader))
+
+
+def write_yaml(fn: AnyPath, obj: dict[str, Any], **kwargs: Any) -> None:
+    try:
+        import yaml
+    except ImportError as e:
+        raise NotImplementedError("Yaml not available") from e
+
+    with open(fn, "w") as f:
+        yaml.dump(obj, f, default_flow_style=False, **kwargs)

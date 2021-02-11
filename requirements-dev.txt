@@ -1,3 +1,6 @@
-pytest
-tokenize-rt
-git+https://github.com/python/mypy.git
+pytest>=6.2.0
+tokenize-rt>=4.1.0
+mypy>=0.800
+
+# extras dependencies
+pyyaml

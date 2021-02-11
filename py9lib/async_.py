@@ -10,13 +10,11 @@ from typing import (
     Callable,
     Generic,
     Iterable,
-    List,
-    Tuple,
     Type,
 )
 
+from py9lib.errors import value_assert
 from py9lib.typing_ import T, V
-from py9lib.util import value_assert
 
 
 # noinspection PyPep8Naming
@@ -96,7 +94,7 @@ async def exec_par_yield_seq(
     max_backup = max_backup or 3 * parallelism
 
     # noinspection PyShadowingNames
-    async def tagged(ix: int, arg: T) -> Tuple[int, V]:
+    async def tagged(ix: int, arg: T) -> tuple[int, V]:
         timeout_ctr = 0
         while True:
             try:
@@ -108,7 +106,7 @@ async def exec_par_yield_seq(
                     print(f"{arg} timed out 5 times, check your task_timeout")
                 continue
 
-    heap: List[Tuple[int, V]] = []
+    heap: list[tuple[int, V]] = []
     yield_ix = 0
 
     async for ix, arg in aenumerate(args):
@@ -137,7 +135,7 @@ async def exec_par_yield_seq(
         yield heappop(heap)[1]
 
 
-async def aenumerate(xs: AsyncIterable[T]) -> AsyncIterable[Tuple[int, T]]:
+async def aenumerate(xs: AsyncIterable[T]) -> AsyncIterable[tuple[int, T]]:
 
     ix = 0
     async for x in xs:
