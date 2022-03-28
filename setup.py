@@ -12,5 +12,5 @@ setup(
     author="Evgeny Naumov",
     description="utility code",
     extras_require={"yaml": ["pyyaml"]},
-    python_requires=">3.9.0",
+    python_requires=">=3.10",
 )

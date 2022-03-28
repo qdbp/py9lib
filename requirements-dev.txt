@@ -1,6 +1,6 @@
 pytest>=6.2.0
 tokenize-rt>=4.1.0
-mypy>=0.800
+mypy>=0.942
 
 # extras dependencies
 pyyaml
