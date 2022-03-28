@@ -1,5 +1,6 @@
-from typing import Any, Callable, Hashable, TypeVar
+from typing import Any, Callable, Hashable, ParamSpec, TypeVar
 
+P = ParamSpec("P")
 T = TypeVar("T")
 V = TypeVar("V")
 F = TypeVar("F", bound=Callable[..., Any])

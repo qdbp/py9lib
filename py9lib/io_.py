@@ -3,10 +3,10 @@ import pickle
 from functools import wraps
 from pathlib import Path
 from time import sleep, time
-from typing import Any, Generic, Union, cast
+from typing import Any, Callable, Generic, Iterable, Type, Union, cast
 
 from py9lib.errors import value_assert
-from py9lib.typing_ import F
+from py9lib.typing_ import F, P, V
 
 
 # noinspection PyPep8Naming
@@ -43,6 +43,41 @@ class ratelimit(Generic[F]):
             return f(*args, **kwargs)
 
         return cast(F, wrapper)
+
+
+def retry(
+    catch: Iterable[Type[Exception]],
+    backoff_start: float,
+    backoff_rate: float,
+    max_retries: int = None,
+    log_fun: Callable[[str], None] = None,
+) -> Callable[[Callable[P, V]], Callable[P, V]]:
+
+    catch = tuple(catch)
+    cur_backoff = backoff_start
+    n_tries = 0
+
+    def wrapper(f: Callable[P, V]) -> Callable[P, V]:
+        @wraps(f)
+        def wrapped(*args, **kwargs) -> V:  # type: ignore
+            nonlocal n_tries
+            nonlocal cur_backoff
+
+            while True:
+                try:
+                    n_tries += 1
+                    return f(*args, **kwargs)
+                except catch as e:  # type: ignore
+                    if max_retries is not None and n_tries > max_retries:
+                        raise
+                    if log_fun is not None:
+                        log_fun(f"Retry caught {e}. {n_tries=}, {cur_backoff=}")
+                    sleep(cur_backoff)
+                    cur_backoff += backoff_rate
+
+        return wrapped
+
+    return wrapper
 
 
 AnyPath = Union[str, Path]
