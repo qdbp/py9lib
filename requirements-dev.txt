@@ -1,6 +1,7 @@
 pytest>=6.2.0
+pytest-asyncio
 tokenize-rt>=4.1.0
-mypy>=0.942
+mypy>=0.960
 
 # extras dependencies
 pyyaml

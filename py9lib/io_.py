@@ -3,14 +3,14 @@ import pickle
 from functools import wraps
 from pathlib import Path
 from time import sleep, time
-from typing import Any, Callable, Generic, Iterable, Type, Union, cast
+from typing import Any, Callable, Iterable, Type, Union, cast
 
 from py9lib.errors import value_assert
 from py9lib.typing_ import F, P, V
 
 
 # noinspection PyPep8Naming
-class ratelimit(Generic[F]):
+class ratelimit:
     def __init__(self, cap: int, period: float) -> None:
         value_assert(cap > 0) and value_assert(period > 1e-6)
 

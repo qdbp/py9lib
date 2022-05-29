@@ -8,7 +8,6 @@ from typing import (
     AsyncIterable,
     Awaitable,
     Callable,
-    Generic,
     Iterable,
     Type,
 )
@@ -18,7 +17,7 @@ from py9lib.typing_ import T, V
 
 
 # noinspection PyPep8Naming
-class aratelimit(Generic[V]):
+class aratelimit:
     def __init__(self, cap: int, period: float) -> None:
         value_assert(cap > 0) and value_assert(period > 1e-6)
 

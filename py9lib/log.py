@@ -12,23 +12,6 @@ VERBOSE = 15
 addLevelName(VERBOSE, "Verbose")
 
 
-# class NiceFormatter(Formatter):
-#     def format(self, record: LogRecord) -> str:
-#
-#         msg = super().format(record)
-#
-#         if hasattr(record, "color"):
-#             msg = color(record.color, msg)
-#
-#         return msg
-#
-#
-# class NiceFilter(Filter):
-#     def filter(self, record: LogRecord) -> bool:
-#
-#         record.levelno
-
-
 def get_nice_formatter() -> Formatter:
     return Formatter(
         fmt=(
